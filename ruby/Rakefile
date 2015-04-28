@@ -16,8 +16,6 @@ task :test_fibers do
         end
       end
 
-      sleep 2
-
       loop do
         fibers.each do |f|
           sleep 0.1
