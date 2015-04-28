@@ -59,7 +59,7 @@ pub extern "C" fn rust_example_init() {
             println!("{}", inefficient_string());
             println!("#########################################################################");
 
-            thread::sleep_ms(1000);
+            thread::sleep_ms(10);
         }
     });
 }

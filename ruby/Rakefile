@@ -2,6 +2,7 @@ require "bundler/gem_tasks"
 require "rust_example"
 
 task :test_fibers do
+  RustExample.init
   10.times do |thread_i|
     puts "Starting thread #{thread_i}"
     Thread.new do
