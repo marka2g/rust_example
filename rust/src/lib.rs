@@ -1,13 +1,21 @@
 #![feature(convert)]
 
 extern crate rand;
+extern crate libc;
 
 use std::thread;
 use rand::Rng;
+use libc::c_char;
+use std::str::from_utf8;
+use std::ffi::CStr;
 
 #[no_mangle]
-pub extern "C" fn hello_rust() -> *const u8 {
-    inefficient_string().as_ptr()
+pub extern "C" fn hello_rust(input: *const c_char) -> *const u8 {
+    inefficient_string(
+        from_utf8(
+            unsafe { CStr::from_ptr(input).to_bytes() }
+        ).unwrap()
+    ).as_ptr()
 }
 
 #[no_mangle]
@@ -15,34 +23,34 @@ pub extern "C" fn rust_example_init() {
     thread::spawn(move || {
         loop {
             println!("############################## Thread tick ##############################");
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
-            println!("{}", inefficient_string());
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
+            println!("{}", inefficient_string("-"));
             println!("#########################################################################");
 
             thread::sleep_ms(10);
@@ -50,7 +58,7 @@ pub extern "C" fn rust_example_init() {
     });
 }
 
-fn inefficient_string() -> String {
+fn inefficient_string(input: &str) -> String {
     let random_number = rand::thread_rng().gen::<i32>();
 
     // Allocate a bunch of stuff
@@ -83,6 +91,7 @@ fn inefficient_string() -> String {
 
     let mut out = "".to_string();
 
+    out.push_str(input);
     out.push_str(a.as_str());
     out.push_str(b.as_str());
     out.push_str(c.as_str());
