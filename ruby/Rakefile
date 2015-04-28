@@ -11,7 +11,7 @@ task :test_fibers do
         fibers << Fiber.new do
           1000.times do |t_i|
             Fiber.yield
-            puts "#{RustExample.make_hello} #{thread_i} - #{fiber_i} - #{t_i}"
+            puts "#{RustExample.hello} #{thread_i} - #{fiber_i} - #{t_i}"
           end
         end
       end

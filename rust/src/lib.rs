@@ -1,6 +1,5 @@
 #![feature(convert)]
 
-extern crate rlibc;
 extern crate rand;
 
 use std::thread;
@@ -9,19 +8,6 @@ use rand::Rng;
 #[no_mangle]
 pub extern "C" fn hello_rust() -> *const u8 {
     inefficient_string().as_ptr()
-}
-
-/// `fill_slice` fills up a `buffer` with "Hello, world!"
-///
-/// # Unsafe
-///
-/// This function assumes that you've allocated at least fourteen bytes of memory at `buffer`. If
-/// you haven't, bad things may happen.
-#[no_mangle]
-pub unsafe extern "C" fn fill_slice(buffer: *mut u8) {
-    let s = inefficient_string();
-
-    rlibc::memcpy(buffer, s.as_ptr(), 14);
 }
 
 #[no_mangle]

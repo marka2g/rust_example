@@ -12,18 +12,6 @@ VALUE hello(void) {
     return Qnil;
 }
 
-VALUE make_hello() {
-    char *hello = (char *)malloc(sizeof(char) * 120);
-
-    fill_slice(hello);
-
-    printf("%s\n", hello);
-
-    free(hello);
-
-    return Qnil;
-}
-
 VALUE init() {
     rust_example_init();
 
@@ -36,5 +24,4 @@ void Init_rust_example(void) {
 
     rb_define_singleton_method(rust_example, "init", init, 0);
     rb_define_singleton_method(rust_example, "hello", hello, 0);
-    rb_define_singleton_method(rust_example, "make_hello", make_hello, 0);
 }
