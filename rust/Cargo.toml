@@ -8,5 +8,8 @@ authors = ["Steve Klabnik <steve@steveklabnik.com>"]
 name = "rust_example"
 crate_type = ["staticlib"]
 
+[dependencies]
+rand = "*"
+
 [dependencies.rlibc]
 git = "https://github.com/rust-lang/rlibc"

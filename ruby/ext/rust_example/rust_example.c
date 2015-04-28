@@ -3,6 +3,7 @@
 
 extern char *hello_rust(void);
 extern void  fill_slice(char *);
+extern void  rust_example_init();
 
 VALUE hello(void) {
     char *hello = hello_rust();
@@ -12,8 +13,7 @@ VALUE hello(void) {
 }
 
 VALUE make_hello() {
-    // "Hello, world!".length == 14, with the null
-    char *hello = (char *)malloc(sizeof(char) * 14);
+    char *hello = (char *)malloc(sizeof(char) * 120);
 
     fill_slice(hello);
 
@@ -30,4 +30,6 @@ void Init_rust_example(void) {
 
     rb_define_singleton_method(rust_example, "hello", hello, 0);
     rb_define_singleton_method(rust_example, "make_hello", make_hello, 0);
+
+    rust_example_init();
 }

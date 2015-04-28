@@ -1,2 +1,30 @@
 require "bundler/gem_tasks"
+require "rust_example"
 
+task :test_fibers do
+  10.times do |thread_i|
+    puts "Starting thread #{thread_i}"
+    Thread.new do
+      fibers = []
+      100.times do |fiber_i|
+        fibers << Fiber.new do
+          1000.times do |t_i|
+            Fiber.yield
+            puts "#{RustExample.make_hello} #{thread_i} - #{fiber_i} - #{t_i}"
+          end
+        end
+      end
+
+      sleep 2
+
+      loop do
+        fibers.each do |f|
+          sleep 0.1
+          f.resume
+        end
+      end
+    end
+  end
+
+  sleep 120 * 60
+end
